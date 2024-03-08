@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,8 +33,15 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/user/settings")
-    public String settings(){
+    @GetMapping("/user/edit")
+    public String settings(Principal principal, Model model){
+        model.addAttribute("user",userService.getUserByPrincipal(principal));
         return "settings";
+    }
+
+    @PostMapping("/user/edit")
+    public String editUser(@RequestParam(name="name",required = false) String name,@RequestParam(name="email",required = false) String email,@RequestParam(name="phoneNumber",required = false) String phoneNumber,@RequestParam(name="id",required = false) Long id){
+        if(!userService.changeParams(id,name,email,phoneNumber)) return "/user/settings";
+        return "redirect:/";
     }
 }

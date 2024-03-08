@@ -32,6 +32,20 @@ public class UserService {
         return true;
     }
 
+    public boolean changeParams(Long id,String name,String email,String phoneNumber){
+        User user = userRepository.getById(id);
+        if (user == null) {
+            return false;
+        }
+        user.setName(name);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        userRepository.save(user);
+        return true;
+    }
+
+
+
     public User getUserByPrincipal(Principal principal){
         if(principal==null) return  new User();
         return userRepository.findByEmail(principal.getName());

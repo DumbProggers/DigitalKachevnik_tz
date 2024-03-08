@@ -10,7 +10,7 @@
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Выйти"/> <br><br>
-        <b><a href="/user/settings">Настройки</a></b>
+        <b><a href="/user/edit">Настройки</a></b>
     </form>
     <#else>
         <b><a href="/login">Войти</a></b>
