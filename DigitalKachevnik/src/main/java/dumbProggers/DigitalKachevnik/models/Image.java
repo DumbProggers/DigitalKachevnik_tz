@@ -29,7 +29,7 @@ public class Image {
     private String contentType;//тип
 
     @Lob//поле в БД хранится в типе LONGBLOB
-    @Column(name = "bytes", columnDefinition = "longblob")
+    @Column(name = "bytes")
     private byte[] bytes;
 
     @OneToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)//отношение, что делать при изменении и тип загрузки(ленивый...)
