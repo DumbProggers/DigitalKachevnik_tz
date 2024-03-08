@@ -1,11 +1,10 @@
 package dumbProggers.DigitalKachevnik.models;
 
 import dumbProggers.DigitalKachevnik.models.enums.Role;
-import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import javax.persistence.*;
 import java.util.*;
 
 @Entity//этот класс - эмулирует таблицу из БД
@@ -27,7 +26,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active=true;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")

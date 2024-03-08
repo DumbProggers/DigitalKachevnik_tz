@@ -12,12 +12,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder; // интерфейс для одностороннего преобразования пароля
 
     public boolean createUser(User user){
         String email = user.getEmail();
@@ -29,8 +31,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return true;
     }
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email);
+
+    public User getUserByPrincipal(Principal principal){
+        if(principal==null) return  new User();
+        return userRepository.findByEmail(principal.getName());
     }
 }
